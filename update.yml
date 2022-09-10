@@ -1,0 +1,89 @@
+- name: Create workspase directory
+  hosts: kube_control_plane
+  vars:
+    envJsonResult: "{{ lookup('file','env.json') | from_json }}"
+  tasks:
+    - name: Creates directory
+      file:
+        path: "/home/{{ envJsonResult.user }}/workspace"
+        state: directory
+        owner: "{{ envJsonResult.user }}"
+        group: "{{ envJsonResult.user }}"
+
+- name: Docker setup
+  hosts: kube_control_plane:kube_node
+  vars:
+    envJsonResult: "{{ lookup('file','env.json') | from_json }}"
+  tasks:
+    - name: Check docker-compose binary file exists.
+      become: yes
+      stat:
+        path: /usr/local/bin/docker-compose
+      register: docker_compose
+
+    - name: Download Docker Compose Binary
+      become: yes
+      get_url:
+        url: "{{ envJsonResult.docker.composeBinaryUrl }}"
+        dest: "/usr/local/bin/docker-compose"
+        mode: +x
+      when: not docker_compose.stat.exists
+
+    - name: Set daemon.json
+      become: yes
+      template:
+        src: daemon.json
+        dest: /etc/docker/daemon.json
+        force: yes
+
+    - name: Add user to docker group
+      become: yes
+      command:
+        cmd: "gpasswd -a {{ envJsonResult.user }} docker"
+
+    - name: Change docker sock
+      become: yes
+      command:
+        cmd: "chgrp docker /var/run/docker.sock"
+
+    - name: Change permission docker sock
+      become: yes
+      file:
+        path: /var/run/docker.sock
+        state: file
+        owner: "{{ envJsonResult.user }}"
+        group: "{{ envJsonResult.user }}"
+
+- name: Kubectl setup
+  hosts: kube_control_plane
+  vars:
+    envJsonResult: "{{ lookup('file','env.json') | from_json }}"
+  tasks:
+    - name: Creates .kube directory
+      file:
+        path: "/home/{{ envJsonResult.user }}/.kube"
+        state: directory
+
+    - name: Check admin.conf file exists.
+      become: yes
+      stat:
+        path: /etc/kubernetes/admin.conf
+      register: k8s_conf
+
+    - name: Copy admin.conf to user's kube config
+      become: yes
+      copy:
+        src: /etc/kubernetes/admin.conf
+        dest: "/home/{{ envJsonResult.user }}/.kube/config"
+        remote_src: yes
+        owner: "{{ envJsonResult.user }}"
+      when: k8s_conf.stat.exists
+
+    - name: set kubectl completion
+      blockinfile:
+        path: ~/.bashrc
+        block: |
+          source <(kubectl completion bash)
+          alias k='kubectl'
+          alias W="watch kubectl get pod"
+          complete -o default -F __start_kubectl k

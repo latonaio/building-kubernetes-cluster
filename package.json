@@ -1,0 +1,22 @@
+{
+  "name": "building-kubernetes-cluster",
+  "version": "1.0.0",
+  "description": "building-kubernetes-cluster は kubernetes cluster を構築するためのマイクロサービスです。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/latonaio/building-kubernetes-cluster.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/latonaio/building-kubernetes-cluster/issues"
+  },
+  "homepage": "https://github.com/latonaio/building-kubernetes-cluster#readme",
+  "devDependencies": {
+    "json5": "^2.2.1"
+  }
+}
