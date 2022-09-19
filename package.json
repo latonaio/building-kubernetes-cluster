@@ -1,21 +1,21 @@
 {
-  "name": "building-kubernetes-cluster",
+  "name": "building-kubernetes-cluster-by-kubespray",
   "version": "1.0.0",
-  "description": "building-kubernetes-cluster は kubernetes cluster を構築するためのマイクロサービスです。",
+  "description": "building-kubernetes-cluster-by-kubespray は kubernetes cluster を構築するためのマイクロサービスです。",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/latonaio/building-kubernetes-cluster.git"
+    "url": "git+https://github.com/latonaio/building-kubernetes-cluster-by-kubespray.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/latonaio/building-kubernetes-cluster/issues"
+    "url": "https://github.com/latonaio/building-kubernetes-cluster-by-kubespray/issues"
   },
-  "homepage": "https://github.com/latonaio/building-kubernetes-cluster#readme",
+  "homepage": "https://github.com/latonaio/building-kubernetes-cluster-by-kubespray#readme",
   "devDependencies": {
     "json5": "^2.2.1"
   }

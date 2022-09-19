@@ -1,9 +1,13 @@
-# building-kubernetes-cluster
-building-kubernetes-cluster は kubernetes cluster を構築するためのマイクロサービスです。
+# building-kubernetes-cluster-by-kubespray
+building-kubernetes-cluster-by-kubespray は Kubespray[https://kubespray.io/#/] を用いて Kubernetes Cluster を構築するためのマイクロサービスです。
+
+
+# 対象環境
+本マイクロサービスの対象環境は、AWS、GCE、Azure、OpenStack、vSphere、ベアメタル、などの環境です。  
 
 ## 構築手順
-### kuberspray を clone
-kuberspray を git clone してください。
+### Kuberspray を clone
+Kuberspray を git clone してください。
 ```
 make clone-kubespray
 ```
